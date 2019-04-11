@@ -6,6 +6,23 @@ struct process{
     float priority;
     bool flag;
 };
+void sort(struct process arr[],int n){
+    for(int i=1;i<n;i++){
+        struct process obj=arr[i];
+        int j=i-1;
+        while(j>=0&&arr[j].priority>=obj.priority){
+            if(arr[j].priority==obj.priority){
+                if(arr[j].arrival_time>obj.arrival_time){
+                    swap(&arr[j],&arr[j+1]); //Implement swapping of two processes
+                }
+            }else{
+                swap(&arr[j],&arr[j+1]);
+            }
+            j--;
+        }
+        swap_n(&arr[j+1],obj);
+    }
+};
 int main(int argc, char const *argv[]) {
     printf("Enter number of process\n");
     int p_no;
