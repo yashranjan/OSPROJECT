@@ -70,6 +70,16 @@ int main(int argc, char const *argv[]) {
         arr[i].burst_time=bt;
     }
     sort(arr,p_no);
-    print_waiting_burst(arr,p_no); //Display final answer for each process
+        int curr=arr[0].index;
+    printf("Order of processes being executed is :\n");
+    for(int i=0;i<p_no;i++){
+        printf("\t\tP%d\n",curr);
+        change_waiting_priority(arr,p_no,arr[i].burst_time,i+1);
+        sort(arr,p_no);
+        curr=arr[i+1].index;
+    }
+    printf("\n");
+    printf("Printing results for each process\n");
+    print(arr,p_no);
     return 0;
 }
