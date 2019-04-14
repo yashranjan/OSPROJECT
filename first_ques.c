@@ -50,6 +50,51 @@ void sort(struct process arr[],int n){
         swap_n(&arr[j+1],obj);
     }
 };
+void change_waiting_priority(struct process arr[],int n,int waiting,int start){
+    for(int i=start;i<n;i++){
+        if(arr[i].flag){
+                arr[i].waiting_time+=(waiting-arr[i].arrival_time);
+                arr[i].flag=false;
+        }else{
+                arr[i].waiting_time+=(waiting);
+        }
+
+        arr[i].priority=(1+((float)arr[i].waiting_time/arr[i].burst_time));
+    }
+}
+void print(struct process a[],int n){
+	for(int i=0;i<120;i++)
+		printf("-");
+	printf("\n");
+	printf("|\tProcess id\t|");
+	printf("|\tArrival Time\t|");
+	printf("|\tBurst Time\t|");
+	printf("|\tWaiting Time\t|");
+	printf("|\tTurnaround Time\t|\n");
+	for(int i=0;i<120;i++)
+		printf("-");
+	printf("\n");
+	int tot_waiting=0,tot_turnaround=0;
+	// float avg_waiting=0,tot_waiting=0;
+	for(int i=0;i<n;i++){
+		struct process demo=a[i];
+		for(int j=0;j<n;j++){
+			if(a[j].index==i+1){
+				demo=a[j];
+				break;
+			}
+		}
+		printf("|\t  P%d\t\t|",demo.index);
+		printf("|\t  %d\t\t|",demo.arrival_time);
+		printf("|\t  %d\t\t|",demo.burst_time);
+		printf("|\t  %d\t\t|",demo.waiting_time);
+		tot_waiting+=demo.waiting_time;
+		printf("|\t  %d\t\t|\n",demo.waiting_time+demo.burst_time);
+		tot_turnaround+=(demo.waiting_time+demo.burst_time);
+	}
+	printf("Average Waiting time %0.2f\n", (float)(tot_waiting)/n);
+	printf("Average Turnaround time %0.2f\n",(float)(tot_turnaround)/n);
+}
 int main(int argc, char const *argv[]) {
     printf("Enter number of process\n");
     int p_no;
